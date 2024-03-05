@@ -1,0 +1,113 @@
+   Q1
+    @Bean  لانها تشغل كلشي ايشي وتنشئ في الحاويه
+    public String getMessage1(){
+        System.out.println("hey from message1");
+        return "1";
+    }
+
+output:
+hey from message1
+
+getMessage1 Method:
+مزوده بالانوتيشن @Bean
+ تطبع hey from message1
+لان رجعنا قيمه 1
+
+-------------------------------------------------------
+
+
+    Q2
+
+    @Bean
+    @Qualifier("1")          استخدمه في حال وجود ميثودات وعدة beans وايش يبدا الاول
+    public String getMessage1(){
+        System.out.println("hey from message1");
+        return "1";
+    }
+
+    @Bean
+    public String getMessage2(@Qualifier("1") String data){ تاخذ معامل من نوع string تقوم بارجاع القيمه "1" عشان Qualifier
+
+        System.out.println("hey from message2");
+        return data;   تعني أن الدالة getMessage2 ستعيد القيمة التي تم حقنها في المعامل data باستخدام الـ Qualifier 1
+    }
+output:
+hey from message1
+hey from message2
+-----------------------------------------------------------
+Q3
+
+  @Bean
+    @Qualifier("1") معرف بالرقم Bean 1       hey from message1 و تعيد قيمه 1 تطبعها 
+    public String getMessage1(){
+        System.out.println("hey from message1");
+        return "1";
+    }
+
+
+    @Bean
+    @Qualifier("2")
+    public String getMessage2(@Qualifier("3")String data){ يعيد قيمه Qualifier 3 وتاخذ معاملا من نوع String
+
+
+        System.out.println("hey from message2");
+        return data;
+    }
+
+
+
+    @Bean
+    @Qualifier("3") لان طبعناها من قبل عن طريق اننا حطيناها قبل الباراميتر في الي فوق ف راح يطبع الي فوق
+    public String getMessage3(){
+        System.out.println("hey from message3");
+        return "3";
+    }
+
+output:
+hey from message1
+hey from message3
+hey from message2
+
+----------------------------------------------------------------------------------------------------------------------------------
+Q4 نفس الي فوق لكن في اختلاف بسيط
+
+@Component يشغل ايشي ويشوف كلشي وهو بكلاس ثاني 
+String data; يخزن البيانات
+
+ public MainController(@Qualifier("1") String data){ 
+بعد ماطبعنا الاولى بالمثال السابق راح يدور اذا فيه ميثود مرسل لها Qualifier1 
+ف يطبعها بعد الاولى
+ this.data=data; تعيين القيمه المحدده للمتغير داخل data
+
+output:
+hey from message1
+hey from main controller
+hey from message3
+hey from message2
+-------------------------------------------------------------------------
+Q5
+
+hey from message3  
+hey from message2
+hey from main controller
+hey from message1 
+
+لان حطينا MainController  
+في getMessage1 
+ف راح يطبعQualifier3 
+لان حطيناها بالثانيه
+ثم بيطبع الثانيه
+ وبعدها لان حطيناها في الاولى MainController 
+ثم بعدها يطبع الاولى
+
+--------
+
+
+
+
+
+
+
+
+
+
